@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edytuj ogłoszenie</title>
+  <meta charset="UTF-8" />
+</head>
+<body>
+<h1>Edytuj ogłoszenie</h1>
+
+<form th:action="@{'/admin/properties/edit/' + ${property.id}}" th:object="${property}" method="post" enctype="multipart/form-data">
+  <label>Tytuł:
+    <input type="text" th:field="*{title}" required />
+  </label><br/>
+
+  <label>Lokalizacja:
+    <input type="text" th:field="*{location}" required />
+  </label><br/>
+
+  <label>Cena:
+    <input type="number" step="0.01" min="0" th:field="*{price}" required />
+  </label><br/>
+
+  <label>Typ nieruchomości:</label>
+  <select th:field="*{type}" required>
+    <option value="">-- Wybierz typ --</option>
+    <option value="DOM" th:selected="*{type} == 'DOM'">Dom</option>
+    <option value="MIESZKANIE" th:selected="*{type} == 'MIESZKANIE'">Mieszkanie</option>
+    <option value="DZIAŁKA" th:selected="*{type} == 'DZIAŁKA'">Działka</option>
+  </select><br/><br/>
+
+  <label>Numer telefonu:
+    <input type="tel" th:field="*{phoneNumber}" required pattern="[0-9]{9,15}"
+           title="Numer telefonu powinien zawierać od 9 do 15 cyfr" />
+  </label><br/>
+
+  <label>Aktualne zdjęcie:</label><br/>
+  <div th:if="${photoBase64 != null}">
+    <img th:src="'data:image/jpeg;base64,' + ${photoBase64}" alt="Zdjęcie ogłoszenia" width="300"/>
+  </div><br/>
+
+  <label>Wgraj nowe zdjęcie (opcjonalnie):
+    <input type="file" name="photoFile" accept="image/*" />
+  </label><br/><br/>
+
+  <button type="submit">Zapisz zmiany</button>
+</form>
+
+<br/>
+<button onclick="window.location.href='/properties'">Lista ogłoszeń</button>
+<button onclick="window.location.href='/'">Strona główna</button>
+
+</body>
+</html>

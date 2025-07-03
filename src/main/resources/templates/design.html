@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dodaj ogłoszenie</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<h1>Dodaj nowe ogłoszenie</h1>
+
+<form th:action="@{/design}" th:object="${property}" method="post" enctype="multipart/form-data">
+    <label>Tytuł:
+        <input type="text" th:field="*{title}" required />
+    </label><br/>
+
+    <label>Lokalizacja:
+        <input type="text" th:field="*{location}" required />
+    </label><br/>
+
+    <label>Cena:
+        <input type="number" th:field="*{price}" min="0" step="0.01" required />
+    </label><br/>
+
+    <label>Typ nieruchomości:</label>
+    <select th:field="*{type}" required>
+        <option value="DOM">Dom</option>
+        <option value="MIESZKANIE">Mieszkanie</option>
+        <option value="DZIAŁKA">Działka</option>
+    </select><br/><br/>
+
+    <label>Numer telefonu:
+        <input type="tel" th:field="*{phoneNumber}" required pattern="[0-9]{9,15}"
+               title="Numer telefonu powinien zawierać od 9 do 15 cyfr" />
+    </label><br/>
+
+    <label>Zdjęcie nieruchomości:
+        <input type="file" name="photoFile" accept="image/*" />
+    </label><br/><br/>
+
+    <button type="submit">Dodaj ogłoszenie</button>
+</form>
+
+<br/>
+<!-- Przyciski nawigacyjne -->
+<button onclick="window.location.href='/properties'">Lista ogłoszeń</button>
+<button onclick="window.location.href='/'">Strona główna</button>
+
+</body>
+</html>

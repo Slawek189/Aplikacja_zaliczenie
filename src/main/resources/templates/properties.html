@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Lista ogłoszeń nieruchomości</title>
+</head>
+<body>
+
+<h1>Lista ogłoszeń</h1>
+
+<button onclick="window.location.href='/'">Strona główna</button>
+
+<!-- Przycisk dodawania ogłoszenia tylko dla zalogowanych -->
+<div sec:authorize="isAuthenticated()">
+  <button onclick="window.location.href='/design'">Dodaj ogłoszenie</button>
+</div>
+
+<!-- Dla niezalogowanych przycisk do logowania -->
+<div sec:authorize="!isAuthenticated()">
+  <button onclick="window.location.href='/login'">Zaloguj się, aby dodać ogłoszenie</button>
+</div>
+
+<ul>
+  <li th:each="property : ${properties}">
+    <strong>
+      <a th:href="@{'/properties/' + ${property.id}}" th:text="${property.title}">Tytuł</a>
+    </strong> –
+    <span th:text="${property.location}">Lokalizacja</span> –
+    <span th:text="${property.price}">Cena</span> PLN –
+    <span th:text="${property.type}">Typ</span>
+
+    <!-- Przycisk edycji/usuwania dla ADMIN lub właściciela -->
+    <span sec:authorize="hasRole('ADMIN')">
+      <a th:href="@{'/admin/properties/edit/' + ${property.id}}">Edytuj</a>
+      <form th:action="@{'/admin/properties/delete/' + ${property.id}}" method="post" style="display:inline"
+            onsubmit="return confirm('Czy na pewno chcesz usunąć to ogłoszenie?');">
+        <button type="submit">Usuń</button>
+      </form>
+    </span>
+  </li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Strona główna</title>
+</head>
+<body>
+<h1>Witaj w serwisie ogłoszeń nieruchomości</h1>
+
+<div th:if="${successMessage}" style="color: green; margin-bottom: 10px;">
+    <p th:text="${successMessage}"></p>
+</div>
+
+<button onclick="window.location.href='/properties'">Przejrzyj ogłoszenia</button>
+
+<div sec:authorize="!isAuthenticated()">
+    <button onclick="window.location.href='/login'">Zaloguj się</button>
+    <button onclick="window.location.href='/register'">Rejestracja</button>
+</div>
+
+
+<div sec:authorize="isAuthenticated()">
+    <button onclick="window.location.href='/design'">Dodaj ogłoszenie</button>
+
+    <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+        <button onclick="window.location.href='/admin/users'">Panel użytkowników</button>
+    </div>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Wyloguj się</button>
+    </form>
+</div>
+</body>
+</html>

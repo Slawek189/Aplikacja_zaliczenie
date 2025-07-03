@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Panel użytkowników</title>
+    <meta charset="UTF-8" />
+    <script>
+        function confirmDelete(username) {
+            return confirm("Czy na pewno chcesz usunąć użytkownika '" + username + "'?");
+        }
+    </script>
+</head>
+<body>
+<h2>Panel użytkowników</h2>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>ID</th><th>Login</th><th>Rola</th><th>Akcje</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.role}"></td>
+        <td>
+            <div th:if="${user.role == 'ROLE_ADMIN'}">
+                Nie można usunąć admina
+            </div>
+            <div th:if="${user.role != 'ROLE_ADMIN'}">
+                <form th:action="@{'/admin/users/delete/' + ${user.id}}" method="post"
+                      th:attr="data-username=${user.username}"
+                      onsubmit="return confirmDelete(this.getAttribute('data-username'))">
+                    <button type="submit">Usuń</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<button onclick="window.location.href='/'">Strona główna</button>
+</body>
+</html>

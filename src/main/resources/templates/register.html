@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Rejestracja</title>
+  <meta charset="UTF-8" />
+</head>
+<body>
+
+<!-- Dla niezalogowanych -->
+<div sec:authorize="!isAuthenticated()">
+
+  <h2>Zarejestruj się</h2>
+
+  <!-- Komunikat o błędzie, np. login zajęty -->
+  <div th:if="${errorMessage}" style="color: red;">
+    <p th:text="${errorMessage}"></p>
+  </div>
+
+  <!-- Komunikat o sukcesie -->
+  <div th:if="${successMessage}" style="color: green;">
+    <p th:text="${successMessage}"></p>
+  </div>
+
+  <form th:action="@{/register}" method="post">
+    <label>Login: <input type="text" name="username" /></label><br/>
+    <label>Hasło: <input type="password" name="password" /></label><br/>
+    <button type="submit">Zarejestruj</button>
+  </form>
+
+  <button onclick="window.location.href='/login'">Masz już konto - zaloguj się</button>
+  <button onclick="window.location.href='/'">Strona główna</button>
+</div>
+
+<!-- Dla zalogowanych -->
+<div sec:authorize="isAuthenticated()">
+  <h2>Jesteś już zalogowany.</h2>
+  <p>Za chwilę zostaniesz przekierowany na stronę główną....</p>
+  <p>Jeśli nie nastąpi przekierowanie, kliknij <a th:href="@{/}">tutaj</a>.</p>
+</div>
+
+</body>
+</html>

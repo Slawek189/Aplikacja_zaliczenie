@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title th:text="${property.title}">Szczegóły ogłoszenia</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+
+<h1 th:text="${property.title}">Tytuł</h1>
+
+<p>Lokalizacja: <span th:text="${property.location}">Lokalizacja</span></p>
+<p>Cena: <span th:text="${property.price}">Cena</span> PLN</p>
+<p>Typ: <span th:text="${property.type}">Typ</span></p>
+
+<div th:if="${photoBase64 != null}">
+  <img th:src="'data:image/jpeg;base64,' + ${photoBase64}" alt="Zdjęcie ogłoszenia" width="300"/>
+</div>
+
+<p th:if="${property.owner != null}">Właściciel: <span th:text="${property.owner.username}"></span></p>
+<p th:if="${property.owner == null}">Właściciel: brak danych</p>
+
+<!-- Ukryty numer telefonu -->
+<button id="contactBtn">Pokaż numer telefonu</button>
+<p id="phoneNumber" style="display:none;" th:text="${property.phoneNumber}">Numer</p>
+
+<script>
+  document.getElementById('contactBtn').onclick = function() {
+    document.getElementById('phoneNumber').style.display = 'block';
+    this.style.display = 'none';
+  };
+</script>
+
+<!-- Edycja i usuwanie -->
+<div th:if="${canEdit}">
+  <a th:href="@{${editLink}}">
+    <button>Edytuj ogłoszenie</button>
+  </a>
+
+  <form th:action="@{'/admin/properties/delete/' + ${property.id}}" method="post"
+        style="display:inline;" onsubmit="return confirm('Czy na pewno chcesz usunąć ogłoszenie?');">
+    <button type="submit">Usuń</button>
+  </form>
+</div>
+
+<br/>
+<button onclick="window.location.href='/properties'">Powrót do listy</button>
+<button onclick="window.location.href='/'">Strona główna</button>
+
+</body>
+</html>

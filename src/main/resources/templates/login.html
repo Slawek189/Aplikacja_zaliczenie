@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Logowanie</title>
+    <meta charset="UTF-8" />
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function redirectAfterDelay(url) {
+            setTimeout(function () {
+                window.location.href = url;
+            }, 3000);
+        }
+        /*]]>*/
+    </script>
+</head>
+<body>
+
+<!-- ✅ Formularz logowania dla niezalogowanych -->
+<div sec:authorize="!isAuthenticated()">
+    <h2>Zaloguj się</h2>
+
+    <div th:if="${param.error}" style="color: red;">
+        <p>Błędny login lub hasło. Spróbuj ponownie.</p>
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <label>Login: <input type="text" name="username" /></label><br/>
+        <label>Hasło: <input type="password" name="password" /></label><br/>
+        <button type="submit">Zaloguj</button>
+    </form>
+
+    <button onclick="window.location.href='/register'">Rejestracja</button>
+    <button onclick="window.location.href='/'">Strona główna</button>
+</div>
+
+<!-- ✅ Komunikat po poprawnym logowaniu -->
+<div th:if="${showSuccessMessage}">
+    <p style="color: green;">
+        Zalogowano pomyślnie! Za chwilę nastąpi przekierowanie na stronę główną...
+        <br/>
+        <a th:href="@{/}">Kliknij tutaj, jeśli przekierowanie nie nastąpi automatycznie.</a>
+    </p>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        redirectAfterDelay('/');
+        /*]]>*/
+    </script>
+</div>
+
+</body>
+</html>
