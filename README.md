@@ -62,3 +62,16 @@ Dodatkowo:
 
 ## 6. PODSUMOWANIE
 Dokumentacja ta przedstawia kluczowe informacje o aplikacji `Aplikacja_zaliczenie` przygotowanej na potrzeby zaliczenia przedmiotu „Programowanie aplikacji WWW w technologii Java”. Zawiera opis funkcji aplikacji, wymagania systemowe, instrukcje instalacji i uruchomienia, a także szczegóły architektury i użytych technologii. W razie potrzeby można ją rozwijać o dodatkowe informacje i zrzuty ekranu, aby jeszcze lepiej zobrazować działanie projektu.
+
+## 7. MOŻLIWOŚCI ROZWOJU I WDROŻENIA
+
+Obecna wersja aplikacji została stworzona jako projekt zaliczeniowy na przedmiot **„Programowanie aplikacji WWW w technologii Java”**. Główny nacisk położono na **logikę działania (backend)**, dlatego interfejs użytkownika jest prostą, funkcjonalną wersją demonstracyjną zbudowaną z użyciem szablonów HTML i silnika Thymeleaf.
+
+W przyszłości aplikacja może zostać:
+- rozszerzona o bardziej rozbudowany i nowoczesny **frontend** (np. oparty o Bootstrap lub React),
+- **wdrożona online**, np. na platformie Heroku, Railway, lub własnym serwerze,
+- połączona z **zewnętrzną bazą danych**, np. PostgreSQL lub MySQL,
+- rozbudowana o dodatkowe funkcje, takie jak: filtrowanie ogłoszeń, wyszukiwarka, integracja z mapą, panel wiadomości, API REST itp.
+
+Aktualnie aplikacja działa **lokalnie**, jednak dzięki wykorzystaniu Spring Boot możliwe jest jej szybkie przystosowanie do środowiska produkcyjnego.
+
