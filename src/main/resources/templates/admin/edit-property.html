@@ -9,6 +9,8 @@
 <h1>Edytuj ogłoszenie</h1>
 
 <form th:action="@{'/admin/properties/edit/' + ${property.id}}" th:object="${property}" method="post" enctype="multipart/form-data">
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
   <label>Tytuł:
     <input type="text" th:field="*{title}" required />
   </label><br/>
